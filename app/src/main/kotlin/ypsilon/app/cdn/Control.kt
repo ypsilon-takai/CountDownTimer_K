@@ -168,49 +168,41 @@ public class Control : Activity(), ServiceConnection {
         // * Small start button
 
         // Start or stop countdown.
-        btStartStop!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                if (!flicked) {
-                    startOrStop()
-                }
-            }
-        })
+        btStartStop!!.setOnClickListener {
+            if (!flicked) startOrStop()
+        }
+
         // flick function
-        btStartStop!!.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                flipTemplate(event)
-                return false
-            }
-        })
+        btStartStop!!.setOnTouchListener { view, motionEvent ->
+            flipTemplate(motionEvent)
+            return false
+        }
+
         btStartStop!!.setEnabled(false)
 
         // ********
         // * Flip
         //
         // Flip button window.
-        vfSelector!!.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                flipTemplate(event)
-                return true
-            }
-        })
+        vfSelector!!.setOnTouchListener { view, motionEvent ->
+            flipTemplate(motionEvent)
+            return true
+        }
 
         // ********
         // * Big start button
         //
         // Big button NOT act with short click.
-        btStartStopBig!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                // Do nothing
-            }
-        })
+        btStartStopBig!!.setOnClickListener {
+            // Do nothing
+        }
+
         // Big button act with long click.
-        btStartStopBig!!.setOnLongClickListener(object : View.OnLongClickListener {
-            override fun onLongClick(v: View): Boolean {
-                startOrStop()
-                return true
-            }
-        })
+        btStartStopBig!!.setOnLongClickListener {
+            startOrStop()
+            return true
+        }
+
         // Flip button window when user wipe on big button.
         btStartStopBig!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -218,6 +210,11 @@ public class Control : Activity(), ServiceConnection {
                 return false
             }
         })
+        btStartStopBig!!.setOnTouchListener { view, motionEvent ->
+            flipTemplate(motionEvent)
+            return false
+        }
+
         btStartStopBig!!.setEnabled(false)
 
 
@@ -251,13 +248,11 @@ public class Control : Activity(), ServiceConnection {
             val idx = it.nextIndex()
             val bt = it.next()
             bt.setText(Converter.buttonTimeSec(btTimesecList!![idx].toInt(), getApplicationContext()))
-            bt.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View) {
-                    if (!timerRunning) {
-                        setTimeOnButtonPush(btTimesecList!![idx].toInt())
-                    }
+            bt.setOnClickListener {
+                if (!timerRunning) {
+                    setTimeOnButtonPush(btTimesecList!![idx].toInt())
                 }
-            })
+            }
             bt.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View): Boolean {
                     showTimeInputDialog(idx)
