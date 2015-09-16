@@ -32,6 +32,9 @@ import java.util.prefs.PreferenceChangeEvent
 
 import java.util.Arrays.asList
 
+import kotlinx.android.synthetic.controler.*
+import kotlinx.android.synthetic.numberinput.*
+
 /**
  * Main window for the timer.
  * @author Ypsilon
@@ -133,29 +136,29 @@ public class Control : Activity(), ServiceConnection {
         setContentView(R.layout.controler)
 
         // Setup timer display area
-        tvTimeView = findViewById(R.id.TimeView) as TextView
+        //tvTimeView = findViewById(R.id.tvTimeView) as TextView
 
         // -- font
         val dispfont = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
         tvTimeView!!.setTypeface(dispfont)
 
         // flipper
-        vfSelector = findViewById(R.id.VF_switcher) as ViewFlipper
+        //vfSelector = findViewById(R.id.vfSelector) as ViewFlipper
 
         // buttons
-        btStartStop = findViewById(R.id.Bt_Main) as Button
-        bt00 = findViewById(R.id.Bt_00) as Button
-        bt01 = findViewById(R.id.Bt_01) as Button
-        bt02 = findViewById(R.id.Bt_02) as Button
-        bt10 = findViewById(R.id.Bt_10) as Button
-        bt11 = findViewById(R.id.Bt_11) as Button
-        bt12 = findViewById(R.id.Bt_12) as Button
+        //btStartStop = findViewById(R.id.btStartStop) as Button
+        //bt00 = findViewById(R.id.bt00) as Button
+        //bt01 = findViewById(R.id.bt01) as Button
+        //bt02 = findViewById(R.id.bt02) as Button
+        //bt10 = findViewById(R.id.bt10) as Button
+        //bt11 = findViewById(R.id.bt11) as Button
+        //bt12 = findViewById(R.id.bt12) as Button
         buttonList = asList<Button>(bt00, bt01, bt02, bt10, bt11, bt12)
 
-        tgbImmediate = findViewById(R.id.TG_immediate) as ToggleButton
-        tgbPrecall = findViewById(R.id.TG_countdown) as ToggleButton
+        //tgbImmediate = findViewById(R.id.tgbImmediate) as ToggleButton
+        //tgbPrecall = findViewById(R.id.tgbPrecall) as ToggleButton
 
-        btStartStopBig = findViewById(R.id.Bt_Sub_Main) as Button
+        //btStartStopBig = findViewById(R.id.btStartStopBig) as Button
 
 
 
@@ -175,7 +178,7 @@ public class Control : Activity(), ServiceConnection {
         // flick function
         btStartStop!!.setOnTouchListener { view, motionEvent ->
             flipTemplate(motionEvent)
-            return false
+            false
         }
 
         btStartStop!!.setEnabled(false)
@@ -186,7 +189,7 @@ public class Control : Activity(), ServiceConnection {
         // Flip button window.
         vfSelector!!.setOnTouchListener { view, motionEvent ->
             flipTemplate(motionEvent)
-            return true
+            true
         }
 
         // ********
@@ -200,7 +203,7 @@ public class Control : Activity(), ServiceConnection {
         // Big button act with long click.
         btStartStopBig!!.setOnLongClickListener {
             startOrStop()
-            return true
+            true
         }
 
         // Flip button window when user wipe on big button.
@@ -212,7 +215,7 @@ public class Control : Activity(), ServiceConnection {
         })
         btStartStopBig!!.setOnTouchListener { view, motionEvent ->
             flipTemplate(motionEvent)
-            return false
+            false
         }
 
         btStartStopBig!!.setEnabled(false)
@@ -566,18 +569,20 @@ public class Control : Activity(), ServiceConnection {
         //レイアウトファイルからビューを取得
         val dialog_view = inflater.inflate(R.layout.numberinput, null)
 
-        val numPicker = dialog_view.findViewById(R.id.numberPicker) as NumberPicker
-        numPicker.setMaxValue(10)
-        numPicker.setMinValue(0)
+        //val npMinutes = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
+        npMinutes.setMaxValue(10)
+        npMinutes.setMinValue(0)
 
-        val buttonName = dialog_view.findViewById(R.id.txButtunName) as TextView
-        buttonName.setText(getString(R.string.dialog_button_name, buttonIdx + 1))
+        //val txButtonName = dialog_view.findViewById(R.id.txButtonName) as TextView
+        txButtonName.setText(getString(R.string.dialog_button_name, buttonIdx + 1))
 
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
-        builder.setView(dialog_view).setTitle(R.string.dialog_title).setPositiveButton(R.string.dialog_set, object : DialogInterface.OnClickListener {
+        builder.setView(dialog_view)
+        builder.setTitle(R.string.dialog_title)
+        builder.setPositiveButton(R.string.dialog_set, object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface, which: Int) {
-                val nPicker = dialog_view.findViewById(R.id.numberPicker) as NumberPicker
-                var timesec = (nPicker.getValue() * 60).toShort()
+                //val npMinutes = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
+                var timesec = (npMinutes.getValue() * 60).toShort()
                 if (timesec.equals(0)) {
                     timesec = 30
                 }
@@ -589,7 +594,8 @@ public class Control : Activity(), ServiceConnection {
                 buttonList!!.get(buttonIdx).setText(Converter.buttonTimeSec(timesec.toInt(), getApplicationContext()))
 
             }
-        }).setNegativeButton(R.string.dialog_cancel, object : DialogInterface.OnClickListener {
+        })
+        builder.setNegativeButton(R.string.dialog_cancel, object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface, which: Int) {
                 /*キャンセルされたときの処理*/
             }
