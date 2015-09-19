@@ -97,18 +97,18 @@ public class Converter {
         }
 
         public fun formatTimeSec(seconds: Int): String {
-            //    	Log.d( "HLGT Debug", "seconds = " + seconds );
+            //Log.d( "HLGT Debug", "seconds = " + seconds );
 
             val min: Int = seconds / 60
             val sec: Int = seconds % 60
 
-            return "${min.format(2)} : ${sec.format(2)}"
+            return "${min.format(2)}:${sec.format(2)}"
         }
 
         public fun buttonTimeSec(seconds: Int, ct: Context): kotlin.String {
             val output: kotlin.String
 
-            //    	Log.d( "HLGT Debug", "seconds = " + seconds );
+            //Log.d( "HLGT Debug", "seconds = " + seconds );
 
             val min = seconds / 60
             val sec = seconds % 60

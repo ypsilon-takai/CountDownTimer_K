@@ -179,7 +179,7 @@ public class CountService : Service() {
         val message = Intent("YP_CDT_TIMECHANGE")
 
         if (remainPreTime > 0) {
-            //    		Log.d("CountService", "cd 01");
+            //Log.d("CountService", "cd 01");
             caller!!.say(remainPreTime)
             // *** call controler
             message.putExtra("STATE", counting)
@@ -187,7 +187,7 @@ public class CountService : Service() {
             message.putExtra("INIT", initialTime)
             remainPreTime--
         } else if (remainTime > 0) {
-            //    		Log.d("CountService", "cd 02");
+            //Log.d("CountService", "cd 02");
             caller!!.say(remainTime)
             // *** call controler
             message.putExtra("STATE", counting)
@@ -195,7 +195,6 @@ public class CountService : Service() {
             message.putExtra("INIT", initialTime)
             remainTime--
         } else if (remainTime <= 0) {
-
             Log.d("CountService", "cd finish")
             caller!!.say("finished")
             ticktick!!.cancel()
@@ -208,7 +207,7 @@ public class CountService : Service() {
                 this.stopSelf()
             }
         } else {
-            //    		Log.d("CountService", "cd error");
+            //Log.d("CountService", "cd error");
             caller!!.say(remainTime)
             // *** call controler
             message.putExtra("STATE", counting)
@@ -217,7 +216,7 @@ public class CountService : Service() {
             remainTime--
         }
 
-        //    	Log.d( "CountService", "CountService " + counting + " : rem=" + remainPreTime +  " rem=" + remainTime);
+        //Log.d( "CountService", "CountService " + counting + " : rem=" + remainPreTime +  " rem=" + remainTime);
 
         // send broadcast message
         sendBroadcast(message)
