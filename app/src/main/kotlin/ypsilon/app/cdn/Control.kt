@@ -34,6 +34,7 @@ import java.util.Arrays.asList
 
 import kotlinx.android.synthetic.controler.*
 import kotlinx.android.synthetic.numberinput.*
+//import kotlinx.android.synthetic.numberinput.*
 
 /**
  * Main window for the timer.
@@ -44,30 +45,10 @@ import kotlinx.android.synthetic.numberinput.*
 
 public class Control : Activity(), ServiceConnection {
 
-    // Time display
-    private var tvTimeView: TextView? = null
-
-    private var vfSelector: ViewFlipper? = null
-
-    // Many button layout
-    private var btStartStop: Button? = null
-    private var bt00: Button? = null
-    private var bt01: Button? = null
-    private var bt02: Button? = null
-    private var bt10: Button? = null
-    private var bt11: Button? = null
-    private var bt12: Button? = null
     private var buttonList: List<Button>? = null
 
-    private var tgbImmediate: ToggleButton? = null
-    private var tgbPrecall: ToggleButton? = null
-
     // Preset button time values
-    private var btTimesecList: ShortArray? = null
-
-
-    // One button layout
-    private var btStartStopBig: Button? = null
+    private var buttonTimeList = IntArray(6)
 
     /**
      * Set time value.
@@ -135,32 +116,12 @@ public class Control : Activity(), ServiceConnection {
         // set entire layout
         setContentView(R.layout.controler)
 
-        // Setup timer display area
-        //tvTimeView = findViewById(R.id.tvTimeView) as TextView
-
         // -- font
         val dispfont = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
         tvTimeView!!.setTypeface(dispfont)
 
-        // flipper
-        //vfSelector = findViewById(R.id.vfSelector) as ViewFlipper
-
-        // buttons
-        //btStartStop = findViewById(R.id.btStartStop) as Button
-        //bt00 = findViewById(R.id.bt00) as Button
-        //bt01 = findViewById(R.id.bt01) as Button
-        //bt02 = findViewById(R.id.bt02) as Button
-        //bt10 = findViewById(R.id.bt10) as Button
-        //bt11 = findViewById(R.id.bt11) as Button
-        //bt12 = findViewById(R.id.bt12) as Button
-        buttonList = asList<Button>(bt00, bt01, bt02, bt10, bt11, bt12)
-
-        //tgbImmediate = findViewById(R.id.tgbImmediate) as ToggleButton
-        //tgbPrecall = findViewById(R.id.tgbPrecall) as ToggleButton
-
-        //btStartStopBig = findViewById(R.id.btStartStopBig) as Button
-
-
+        // button list
+        buttonList = arrayOf(bt00, bt01, bt02, bt10, bt11, bt12)
 
         // Converter class provides format exchange functionality.
         tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
@@ -207,12 +168,6 @@ public class Control : Activity(), ServiceConnection {
         }
 
         // Flip button window when user wipe on big button.
-        btStartStopBig!!.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                flipTemplate(event)
-                return false
-            }
-        })
         btStartStopBig!!.setOnTouchListener { view, motionEvent ->
             flipTemplate(motionEvent)
             false
