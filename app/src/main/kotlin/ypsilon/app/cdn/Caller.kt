@@ -42,13 +42,13 @@ public class Caller(private val parentContext: Context) {
     public fun say(num: Int) {
         val intnum = Integer.valueOf(num)
         if (numIdMap.containsKey(intnum)) {
-            spool.play(numIdMap.get(intnum), 1.0f, 1.0f, 1, 0, 1.0f)
+            spool.play(numIdMap.get(intnum) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 
     public fun say(word: String) {
         if (wordIdMap.containsKey(word)) {
-            spool.play(wordIdMap.get(word), 1.0f, 1.0f, 1, 0, 1.0f)
+            spool.play(wordIdMap.get(word) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 }

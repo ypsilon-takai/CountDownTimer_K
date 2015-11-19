@@ -117,12 +117,11 @@ public class Control : Activity(), ServiceConnection {
         // font
         val dispfont = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
         tvTimeView!!.setTypeface(dispfont)
+        tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
 
         // button list
         buttonList = arrayOf(bt00, bt01, bt02, bt10, bt11, bt12)
 
-        // Converter class provides format exchange functionality.
-        tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
         btStartStop!!.setText(getResources().getString(R.string.text_init))
         btStartStopBig!!.setText(getResources().getString(R.string.text_init))
 
@@ -323,7 +322,7 @@ public class Control : Activity(), ServiceConnection {
 
         // save button values
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        var prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
         for(idx in buttonList.indices) {
             prefs.edit().putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
@@ -336,7 +335,7 @@ public class Control : Activity(), ServiceConnection {
 
         Log.d("HLGT Debug", "Control onDestroy()")
 
-        val sstate = getCounterServiceState() as Bundle
+        val sstate = getCounterServiceState()
         if (sstate != null) {
             if (!sstate.getBoolean("BUSY")) {
                 try {
@@ -375,7 +374,6 @@ public class Control : Activity(), ServiceConnection {
     public fun startOrStop() {
         if (timerRunning) {
             // STOP
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             timerRunning = false
             resetDisp()
 
@@ -423,6 +421,7 @@ public class Control : Activity(), ServiceConnection {
         tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
         setStartButtonsColor(false)
         setStartButtonsText(getResources().getString(R.string.text_start))
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
 
