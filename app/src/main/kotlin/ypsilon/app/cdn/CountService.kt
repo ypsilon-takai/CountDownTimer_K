@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
-//import android.os.RemoteException
 import android.util.Log
 
 public class CountService : Service() {
@@ -65,22 +64,18 @@ public class CountService : Service() {
 
     public var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
 
-        //throws(RemoteException::class)
         override fun setTime(time: Int, pretime: Int): Boolean {
             return this@CountService.setTime(time, pretime)
         }
 
-        //throws(RemoteException::class)
         override fun start(time: Int, pretime: Int) {
             this@CountService.start(time, pretime)
         }
 
-        //throws(RemoteException::class)
         override fun stop() {
             this@CountService.stop()
         }
 
-        //throws(RemoteException::class)
         override fun end() {
             this@CountService.end()
         }
@@ -93,7 +88,6 @@ public class CountService : Service() {
             this@CountService.restart()
         }
 
-        //throws(RemoteException::class)
         override fun getState(): Bundle {
             return this@CountService.getState()
         }
@@ -101,7 +95,6 @@ public class CountService : Service() {
 
 
     // Control functions
-
     private fun setTime(time: Int, pretime: Int): Boolean {
         Log.d("HLGT CS", "CountService setTime()")
 
@@ -123,6 +116,7 @@ public class CountService : Service() {
         ticktick!!.start()
     }
 
+
     private fun stop() {
 
         Log.d("HLGT CS", "CountService stop()")
@@ -141,14 +135,15 @@ public class CountService : Service() {
         counting = false
     }
 
+
     private fun restart() {
         Log.d("HLGT CS", "CountService restart()")
 
         counting = true
     }
 
-    private fun end() {
 
+    private fun end() {
         Log.d("HLGT CS", "CountService end()")
 
         if (ticktick != null) {
@@ -158,8 +153,8 @@ public class CountService : Service() {
         this.stopSelf()
     }
 
-    private fun getState(): Bundle {
 
+    private fun getState(): Bundle {
         Log.d("HLGT CS", "CountService getState()")
 
         val res = Bundle()
@@ -174,6 +169,7 @@ public class CountService : Service() {
 
         return res
     }
+
 
     public fun countDown() {
         val message = Intent("YP_CDT_TIMECHANGE")
@@ -222,6 +218,4 @@ public class CountService : Service() {
         sendBroadcast(message)
 
     }
-
-
 }
