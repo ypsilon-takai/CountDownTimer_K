@@ -30,25 +30,34 @@ public class Caller(private val parentContext: Context) {
 
     private fun createIdMap() {
 
-        for (entry in conv.numToResid.entrySet()) {
-            numIdMap.put(entry.getKey(), spool.load(parentContext, entry.getValue().toInt(), 1).toInt())
+        //for (entry in conv.numToResid.entrySet()) {
+        //    numIdMap.put(entry.getKey(), spool.load(parentContext, entry.getValue().toInt(), 1).toInt())
+        //}
+        for (entry in conv.numToResid.entries) {
+            numIdMap.put(entry.key, spool.load(parentContext, entry.value.toInt(), 1).toInt())
         }
 
-        for (entry in conv.wordToResid.entrySet()) {
-            wordIdMap.put(entry.getKey(), spool.load(parentContext, entry.getValue().toInt(), 1).toInt())
+
+        //for (entry in conv.wordToResid.entrySet()) {
+        //    wordIdMap.put(entry.getKey(), spool.load(parentContext, entry.getValue().toInt(), 1).toInt())
+        //}
+        for (entry in conv.wordToResid.entries) {
+            wordIdMap.put(entry.key, spool.load(parentContext, entry.value.toInt(), 1).toInt())
         }
     }
 
     public fun say(num: Int) {
-        val intnum = Integer.valueOf(num)
-        if (numIdMap.containsKey(intnum)) {
-            spool.play(numIdMap.get(intnum) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
+        val number_int = Integer.valueOf(num)
+        if (numIdMap.containsKey(number_int)) {
+            //spool.play(numIdMap.get(number_int) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
+            spool.play(numIdMap[number_int] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 
     public fun say(word: String) {
         if (wordIdMap.containsKey(word)) {
-            spool.play(wordIdMap.get(word) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
+            //spool.play(wordIdMap.get(word) as Int, 1.0f, 1.0f, 1, 0, 1.0f)
+            spool.play(wordIdMap[word] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 }

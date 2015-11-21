@@ -18,11 +18,9 @@ public open class TickTick {
         timer = Timer(true)
         timer!!.schedule(object : TimerTask() {
             override fun run() {
-                handler.post(object : Runnable {
-                    override fun run() {
+                handler.post {
                         onTick()
-                    }
-                })
+                }
             }
         }, 0, 1000)
     }

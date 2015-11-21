@@ -2,7 +2,7 @@ package ypsilon.app.cdn
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
+//import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -10,7 +10,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.content.SharedPreferences
+//import android.content.SharedPreferences
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.IBinder
@@ -20,18 +20,18 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
+//import android.view.View
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.NumberPicker
-import android.widget.TextView
-import android.widget.ToggleButton
-import android.widget.ViewFlipper
-import java.util.prefs.PreferenceChangeEvent
+//import android.widget.CheckBox
+//import android.widget.NumberPicker
+//import android.widget.TextView
+//import android.widget.ToggleButton
+//import android.widget.ViewFlipper
+//import java.util.prefs.PreferenceChangeEvent
 
 import kotlinx.android.synthetic.controler.*
-//import kotlinx.android.synthetic.numberinput.*
+import kotlinx.android.synthetic.numberinput.*
 
 /**
  * Main window for the timer.
@@ -96,7 +96,7 @@ public class Control : Activity(), ServiceConnection {
      * Called when the activity is first created.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<Activity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
 
         Log.d("HLGT Debug", "Control onCreate()")
 
@@ -202,12 +202,10 @@ public class Control : Activity(), ServiceConnection {
                     setTimeOnButtonPush(buttonTimeList[idx])
                 }
             }
-            bt.setOnLongClickListener(object : View.OnLongClickListener {
-                override fun onLongClick(v: View): Boolean {
-                    showTimeInputDialog(idx)
-                    return true
-                }
-            })
+            bt.setOnLongClickListener {
+                showTimeInputDialog(idx)
+                true
+            }
         }
 
     }
@@ -232,7 +230,7 @@ public class Control : Activity(), ServiceConnection {
     }
 
     override fun onStart() {
-        super<Activity>.onStart()
+        super.onStart()
 
         Log.d("HLGT Debug", "Control onStart()")
 
@@ -278,7 +276,8 @@ public class Control : Activity(), ServiceConnection {
             // service calls back when ready
             if (!bindToService) {
                 Log.d("HLGT Debug", "Binding to service.")
-                val intent = Intent(this, javaClass<CountService>())
+                //val intent = Intent(applicationContext, javaClass<CountService>())
+                val intent = Intent(applicationContext, CountService::class.java)
                 startService(intent)
                 bindService(intent, this, Context.BIND_AUTO_CREATE)
             }
@@ -290,18 +289,19 @@ public class Control : Activity(), ServiceConnection {
         for(idx in buttonList.indices) {
             savedInstanceState.putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
-        super<Activity>.onSaveInstanceState(savedInstanceState)
+        super.onSaveInstanceState(savedInstanceState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super<Activity>.onRestoreInstanceState(savedInstanceState)
+        super.onRestoreInstanceState(savedInstanceState)
 
         // restore button value
         buttonTimeList = defaultButtonValues
         for(idx in buttonList.indices) {
             buttonTimeList[idx] = savedInstanceState.getInt(buttonList[idx]!!.getTag().toString())
-            val bt = buttonList[idx] as Button
-            bt.setText(Converter.buttonTimeSec(buttonTimeList[idx], getApplicationContext()))
+            //val bt = buttonList[idx] as Button
+            //bt.setText(Converter.buttonTimeSec(buttonTimeList[idx], getApplicationContext()))
+            buttonList[idx]!!.text = Converter.buttonTimeSec(buttonTimeList[idx], applicationContext)
 
         }
     }
@@ -328,7 +328,7 @@ public class Control : Activity(), ServiceConnection {
         }
         prefs.edit().commit()
 
-        super<Activity>.onStop()
+        super.onStop()
     }
 
     override fun onDestroy() {
@@ -343,7 +343,8 @@ public class Control : Activity(), ServiceConnection {
                     Log.d("HLGT Debug", "CountService Calling stopService()")
 
                     counterService!!.end()
-                    val intent = Intent(this, javaClass<CountService>())
+                    //val intent = Intent(this, javaClass<CountService>())
+                    val intent = Intent(applicationContext, CountService::class.java)
                     stopService(intent)
                 } catch (e: Exception) {
                     // do nothing
@@ -352,15 +353,15 @@ public class Control : Activity(), ServiceConnection {
             }
         }
 
-        super<Activity>.onDestroy()
+        super.onDestroy()
     }
 
     /**
      * Gereric function to setup number buttons.
-     * @param timesec Setting time.
+     * @param time_second Setting time.
      */
-    private fun setTimeOnButtonPush(timesec: Int) {
-        setTimeVal = timesec
+    private fun setTimeOnButtonPush(time_second: Int) {
+        setTimeVal = time_second
         setTimeDisp(setTimeVal)
         if (tgbImmediate!!.isChecked()) {
             startOrStop()
@@ -397,7 +398,8 @@ public class Control : Activity(), ServiceConnection {
                 setStartButtonsText(Converter.formatTimeSec(setTimeVal))
 
             } catch (e: Exception) {
-                tvTimeView!!.setText("ERROR!")
+                //tvTimeView!!.setText("ERROR!")
+                tvTimeView!!.text = "ERROR!"
             }
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -411,14 +413,16 @@ public class Control : Activity(), ServiceConnection {
      */
     public fun setTimeDisp(time: Int) {
         val st = Converter.formatTimeSec(time)
-        tvTimeView!!.setText(st)
+        //tvTimeView!!.setText(st)
+        tvTimeView!!.text = st
     }
 
     /**
      * Reset display and button text.
      */
     private fun resetDisp() {
-        tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
+        //tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
+        tvTimeView!!.text = Converter.formatTimeSec(setTimeVal)
         setStartButtonsColor(false)
         setStartButtonsText(getResources().getString(R.string.text_start))
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -507,19 +511,20 @@ public class Control : Activity(), ServiceConnection {
         //レイアウトファイルからビューを取得
         val dialog_view = inflater.inflate(R.layout.numberinput, null)
 
-        val npMinutes = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
+        //val npMinutes = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
         npMinutes.setMaxValue(10)
         npMinutes.setMinValue(0)
 
-        val txButtonName = dialog_view.findViewById(R.id.txButtonName) as TextView
-        txButtonName.setText(getString(R.string.dialog_button_name, buttonIdx + 1))
+        //val txButtonName = dialog_view.findViewById(R.id.txButtonName) as TextView
+        //txButtonName.setText(getString(R.string.dialog_button_name, buttonIdx + 1))
+        txButtonName.text = getString(R.string.dialog_button_name, buttonIdx + 1)
 
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
         builder.setView(dialog_view)
         builder.setTitle(R.string.dialog_title)
-        builder.setPositiveButton(R.string.dialog_set, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                var timesec = (npMinutes.getValue() * 60)
+        builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
+                //var timesec = (npMinutes.getValue() * 60)
+                var timesec = npMinutes.value  * 60
                 if (timesec.equals(0)) {
                     timesec = 30
                 }
@@ -527,17 +532,14 @@ public class Control : Activity(), ServiceConnection {
                 //if (cb30sec.isChecked() && numPicker.getValue() < 10) {
                 //    timesec += 30;
                 //}
-                buttonTimeList.set(buttonIdx, timesec)
+                //buttonTimeList.set(buttonIdx, timesec)
+                buttonTimeList[buttonIdx] = timesec
 
-                buttonList.get(buttonIdx)!!.setText(Converter.buttonTimeSec(timesec.toInt(), getApplicationContext()))
-
-            }
+                //buttonList.get(buttonIdx)!!.setText(Converter.buttonTimeSec(timesec.toInt(), getApplicationContext()))
+                //buttonList[buttonIdx]!!.setText(Converter.buttonTimeSec(timesec.toInt(), applicationContext)))
+                buttonList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec.toInt(), applicationContext)
         })
-        builder.setNegativeButton(R.string.dialog_cancel, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                /*キャンセルされたときの処理*/
-            }
-        })
+        builder.setNegativeButton(R.string.dialog_cancel,{ dialog: DialogInterface, which: Int -> })
 
         val myDialog = builder.create()
 
@@ -551,7 +553,7 @@ public class Control : Activity(), ServiceConnection {
     companion object {
 
         // Dialog ids
-        val DIALOG_SET_TIME = 0
+        //val DIALOG_SET_TIME = 0
 
         // Default button times
         val defaultButtonValues = intArrayOf(600, 300, 180, 120, 60, 30)

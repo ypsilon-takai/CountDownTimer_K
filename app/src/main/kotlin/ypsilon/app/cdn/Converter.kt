@@ -75,10 +75,10 @@ public class Converter {
     }
 
     public fun getResId(num: Int?): Int? {
-        if (!numToResid.containsKey(num)) {
+        if (!numToResid.containsKeyRaw(num)) {
             return -1
         } else {
-            return numToResid.get(num)
+            return numToResid.getRaw(num)
         }
     }
 
@@ -86,7 +86,7 @@ public class Converter {
         if (!wordToResid.containsKey(word)) {
             return -1
         } else {
-            return numToResid.get(word)
+            return numToResid.getRaw(word)
         }
     }
 
@@ -117,9 +117,9 @@ public class Converter {
             val minutesD = min.toInt()
 
             if (seconds < 60) {
-                output = "${secondsD}${ct.getString(R.string.text_sec)}"
+                output = "$secondsD${ct.getString(R.string.text_sec)}"
             } else {
-                output = "${minutesD}${ct.getString(R.string.text_min)}"
+                output = "$minutesD${ct.getString(R.string.text_min)}"
             }
 
             return output

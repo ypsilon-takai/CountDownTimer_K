@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
-import android.os.RemoteException
+//import android.os.RemoteException
 import android.util.Log
 
 public class CountService : Service() {
@@ -65,22 +65,22 @@ public class CountService : Service() {
 
     public var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
 
-        throws(RemoteException::class)
+        //throws(RemoteException::class)
         override fun setTime(time: Int, pretime: Int): Boolean {
             return this@CountService.setTime(time, pretime)
         }
 
-        throws(RemoteException::class)
+        //throws(RemoteException::class)
         override fun start(time: Int, pretime: Int) {
             this@CountService.start(time, pretime)
         }
 
-        throws(RemoteException::class)
+        //throws(RemoteException::class)
         override fun stop() {
             this@CountService.stop()
         }
 
-        throws(RemoteException::class)
+        //throws(RemoteException::class)
         override fun end() {
             this@CountService.end()
         }
@@ -93,7 +93,7 @@ public class CountService : Service() {
             this@CountService.restart()
         }
 
-        throws(RemoteException::class)
+        //throws(RemoteException::class)
         override fun getState(): Bundle {
             return this@CountService.getState()
         }
