@@ -20,9 +20,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.TextView
 
 import kotlinx.android.synthetic.controler.*
-import kotlinx.android.synthetic.numberinput.*
+// Dialogに使えないみたい
+//import kotlinx.android.synthetic.numberinput.*
 
 /**
  * Main window for the timer.
@@ -494,9 +497,11 @@ public class Control : Activity(), ServiceConnection {
         //レイアウトファイルからビューを取得
         val dialog_view = inflater.inflate(R.layout.numberinput, null)
 
-        npMinutes.setMaxValue(10)
-        npMinutes.setMinValue(0)
+        val npMinutes = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
+        npMinutes.maxValue = 10
+        npMinutes.minValue = 0
 
+        val txButtonName = dialog_view.findViewById(R.id.txButtonName) as TextView
         txButtonName.text = getString(R.string.dialog_button_name, buttonIdx + 1)
 
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
