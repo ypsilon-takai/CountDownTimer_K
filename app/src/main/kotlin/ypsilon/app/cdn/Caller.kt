@@ -6,7 +6,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
 
-public class Caller(private val parentContext: Context) {
+class Caller(private val parentContext: Context) {
 
     private val spool: SoundPool
     private val wordIdMap: HashMap<String, Int>
@@ -37,14 +37,14 @@ public class Caller(private val parentContext: Context) {
         }
     }
 
-    public fun say(num: Int) {
+    fun say(num: Int) {
         val number_int = Integer.valueOf(num)
         if (numIdMap.containsKey(number_int)) {
             spool.play(numIdMap[number_int] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 
-    public fun say(word: String) {
+    fun say(word: String) {
         if (wordIdMap.containsKey(word)) {
             spool.play(wordIdMap[word] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }

@@ -5,16 +5,16 @@ import java.util.TimerTask
 
 import android.os.Handler
 
-public open class TickTick {
+open class TickTick {
 
     private var timer: Timer? = null
 
     var handler: Handler = android.os.Handler()
 
-    public open fun onTick() {
+    open fun onTick() {
     }
 
-    public fun start() {
+    fun start() {
         timer = Timer(true)
         timer!!.schedule(object : TimerTask() {
             override fun run() {
@@ -25,7 +25,7 @@ public open class TickTick {
         }, 0, 1000)
     }
 
-    public fun cancel() {
+    fun cancel() {
         timer!!.cancel()
     }
 

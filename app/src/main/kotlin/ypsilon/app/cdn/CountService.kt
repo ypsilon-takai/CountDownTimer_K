@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 
-public class CountService : Service() {
+class CountService : Service() {
 
     private var remainTime: Int = 0
     private var remainPreTime: Int = 0
@@ -62,7 +62,7 @@ public class CountService : Service() {
     }
 
 
-    public var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
+    var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
 
         override fun setTime(time: Int, pretime: Int): Boolean {
             return this@CountService.setTime(time, pretime)
@@ -171,7 +171,7 @@ public class CountService : Service() {
     }
 
 
-    public fun countDown() {
+    fun countDown() {
         val message = Intent("YP_CDT_TIMECHANGE")
 
         if (remainPreTime > 0) {

@@ -4,10 +4,10 @@ import android.content.Context
 import java.util.HashMap
 
 
-public class Converter {
+class Converter {
 
-    public var numToResid: HashMap<Int, Int>
-    public var wordToResid: HashMap<String, Int>
+    var numToResid: HashMap<Int, Int>
+    var wordToResid: HashMap<String, Int>
 
     init {
 
@@ -74,20 +74,12 @@ public class Converter {
 
     }
 
-    public fun getResId(num: Int?): Int? {
-        if (!numToResid.containsKeyRaw(num)) {
-            return -1
-        } else {
-            return numToResid.getRaw(num)
-        }
+    fun getResId(num: Int): Int {
+        return numToResid.getOrElse(num){return -1}
     }
 
-    public fun getResId(word: String): Int? {
-        if (!wordToResid.containsKey(word)) {
-            return -1
-        } else {
-            return numToResid.getRaw(word)
-        }
+    fun getResId(word: String): Int? {
+        return wordToResid.getOrElse(word){return -1}
     }
 
     companion object {
@@ -96,7 +88,7 @@ public class Converter {
             return java.lang.String.format("%0${digits}d", this)
         }
 
-        public fun formatTimeSec(seconds: Int): String {
+        fun formatTimeSec(seconds: Int): String {
             //Log.d( "HLGT Debug", "seconds = " + seconds );
 
             val min: Int = seconds / 60
@@ -105,7 +97,7 @@ public class Converter {
             return "${min.format(2)}:${sec.format(2)}"
         }
 
-        public fun buttonTimeSec(seconds: Int, ct: Context): kotlin.String {
+        fun buttonTimeSec(seconds: Int, ct: Context): kotlin.String {
             val output: kotlin.String
 
             //Log.d( "HLGT Debug", "seconds = " + seconds );
