@@ -108,8 +108,8 @@ class Control : Activity(), ServiceConnection {
         setContentView(R.layout.controler)
 
         // font
-        val dispfont = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
-        tvTimeView!!.setTypeface(dispfont)
+        val displayFont: Typeface? = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
+        tvTimeView!!.setTypeface(displayFont)
         tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
 
         // button list
@@ -188,9 +188,11 @@ class Control : Activity(), ServiceConnection {
         btStartStopBig!!.setText(s)
     }
 
+    /*
     private fun setPresetButtonText(bt: Button, s: String) {
         bt.setText(s + getString(R.string.text_min))
     }
+    */
 
     override fun onStart() {
         super.onStart()
@@ -380,8 +382,7 @@ class Control : Activity(), ServiceConnection {
      * @param time : time as seconds.
      */
     private fun setTimeDisp(time: Int) {
-        val st = Converter.formatTimeSec(time)
-        tvTimeView!!.text = st
+        tvTimeView!!.text = Converter.formatTimeSec(time)
     }
 
     /**
@@ -458,25 +459,13 @@ class Control : Activity(), ServiceConnection {
         }
     }
 
-    // time input dialog
-    /*
-    override fun onCreateDialog(id: Int): Dialog {
-        val dialog: Dialog?
-        when (id) {
-            DIALOG_SET_TIME -> // do the work to define the pause Dialog
-                dialog = null
-            else -> dialog = null
-        }
-        return dialog
-    }
-    */
-
     protected fun showTimeInputDialog(buttonIdx: Int) {
+
         val builder = AlertDialog.Builder(this)
+
         val inflater = LayoutInflater.from(this)
         //レイアウトファイルからビューを取得
         val dialog_view = inflater.inflate(R.layout.numberinput, null)
-
         val npMinutes: NumberPicker = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
         npMinutes.setMaxValue(10)
         npMinutes.setMinValue(0)
