@@ -88,7 +88,7 @@ class Converter {
             return java.lang.String.format("%0${digits}d", this)
         }
 
-        fun formatTimeSec(seconds: Int): String {
+        fun formatTimeMinSec(seconds: Int): String {
             //Log.d( "HLGT Debug", "seconds = " + seconds );
 
             val min: Int = seconds / 60
@@ -97,6 +97,31 @@ class Converter {
             return "${min.format(2)}:${sec.format(2)}"
         }
 
+        fun formatTimeMin(seconds: Int): kotlin.String {
+            val sec = seconds / 60
+
+            return "${sec.format(2)}"
+        }
+
+        fun formatTimeSec(seconds: Int): kotlin.String {
+            val min = seconds % 60
+
+            return "${min.format(2)}"
+        }
+
+
+        fun buttonTimeMin(seconds: Int): kotlin.String {
+            val min = seconds / 60
+
+            return "${min}"
+        }
+        fun buttonTimeSec(seconds: Int): kotlin.String {
+            val sec = seconds % 60
+
+            return ":${sec.format(2)}"
+        }
+
+        /*
         fun buttonTimeSec(seconds: Int, ct: Context): kotlin.String {
             val output: kotlin.String
 
@@ -109,12 +134,15 @@ class Converter {
             val minutesD = min.toInt()
 
             if (seconds < 60) {
-                output = "$secondsD${ct.getString(R.string.text_sec)}"
+                //output = "$secondsD${ct.getString(R.string.text_sec)}"
+                output = "$secondsD"
             } else {
-                output = "$minutesD${ct.getString(R.string.text_min)}"
+                //output = "$minutesD${ct.getString(R.string.text_min)}"
+                output = "$minutesD"
             }
 
             return output
         }
+        */
     }
 }

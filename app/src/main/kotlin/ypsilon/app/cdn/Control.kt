@@ -37,6 +37,7 @@ class Control : Activity(), ServiceConnection {
 
     // Preset button list
     private var buttonList: Array<Button?> = arrayOfNulls(6)
+    private var text30secList: Array<TextView?> = arrayOfNulls(6)
 
     // Preset button time values
     private var buttonTimeList = IntArray(6)
@@ -110,10 +111,13 @@ class Control : Activity(), ServiceConnection {
         // font
         val displayFont: Typeface? = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
         tvTimeView!!.setTypeface(displayFont)
-        tvTimeView!!.setText(Converter.formatTimeSec(setTimeVal))
+        tvTimeView!!.setText(Converter.formatTimeMinSec(setTimeVal))
 
         // button list
         buttonList = arrayOf(bt00, bt01, bt02, bt10, bt11, bt12)
+        text30secList = arrayOf(tv_btsec00, tv_btsec01, tv_btsec02,
+                tv_btsec10, tv_btsec11, tv_btsec12)
+
 
         btStartStop!!.setText(getResources().getString(R.string.text_init))
         btStartStopBig!!.setText(getResources().getString(R.string.text_init))
@@ -209,10 +213,16 @@ class Control : Activity(), ServiceConnection {
         for(idx in buttonList.indices) {
             buttonTimeList[idx] = prefs.getInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
-        // Functions for number button clicked.
+        // Change button property
+        // -Button text margin to 100
+        // -Functions for number button clicked.
         for (idx in buttonList.indices) {
             val bt = buttonList[idx] as Button
-            bt.setText(Converter.buttonTimeSec(buttonTimeList[idx], getApplicationContext()))
+            bt.text = Converter.buttonTimeMin(buttonTimeList[idx])
+
+            val sec_txt = text30secList[idx] as TextView
+            sec_txt.text = Converter.buttonTimeSec(buttonTimeList[idx])
+
             bt.setOnClickListener {
                 if (!timerRunning) {
                     setTimeOnButtonPush(buttonTimeList[idx])
@@ -239,14 +249,14 @@ class Control : Activity(), ServiceConnection {
                         if (!timerRunning) {
                             timerRunning = true
                             setStartButtonsColor(true)
-                            setStartButtonsText(Converter.formatTimeSec(setTimeVal))
+                            setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
                         }
 
                         setTimeVal = message.getExtras().getInt("INIT", 0)
-                        setStartButtonsText(Converter.formatTimeSec(setTimeVal))
+                        setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
 
                         val time = message.getExtras().getInt("TIME", 0)
-                        tvTimeView!!.setText(Converter.formatTimeSec(time))
+                        tvTimeView!!.setText(Converter.formatTimeMinSec(time))
 
                     } else {
                         Log.d("HLGT Debug", "Control onReceive()" + csstate)
@@ -270,6 +280,20 @@ class Control : Activity(), ServiceConnection {
             }
         }
 
+    }
+
+    override fun onWindowFocusChanged(hasFocus : Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        for(idx in buttonList.indices) {
+            val bt = buttonList[idx] as Button
+            bt.setPadding(bt.paddingLeft, bt.paddingTop, (bt.width * 0.5).toInt(), bt.paddingBottom)
+            //Log.d("HLGT Debug", "Button pad ${bt.width}")
+
+            val bt_second = text30secList[idx] as TextView
+            bt_second.setPadding((bt_second.width * 0.52).toInt(), bt_second.paddingTop,
+                    bt_second.paddingRight, bt_second.paddingBottom)
+            //Log.d("HLGT Debug", "Button sec pad ${bt.width}")
+        }
     }
 
     override fun onPause() {
@@ -366,7 +390,7 @@ class Control : Activity(), ServiceConnection {
 
                 timerRunning = true
                 setStartButtonsColor(true)
-                setStartButtonsText(Converter.formatTimeSec(setTimeVal))
+                setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
 
             } catch (e: Exception) {
                 tvTimeView!!.text = "ERROR!"
@@ -382,14 +406,14 @@ class Control : Activity(), ServiceConnection {
      * @param time : time as seconds.
      */
     private fun setTimeDisp(time: Int) {
-        tvTimeView!!.text = Converter.formatTimeSec(time)
+        tvTimeView!!.text = Converter.formatTimeMinSec(time)
     }
 
     /**
      * Reset display and button text.
      */
     private fun resetDisp() {
-        tvTimeView!!.text = Converter.formatTimeSec(setTimeVal)
+        tvTimeView!!.text = Converter.formatTimeMinSec(setTimeVal)
         setStartButtonsColor(false)
         setStartButtonsText(getResources().getString(R.string.text_start))
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -477,17 +501,18 @@ class Control : Activity(), ServiceConnection {
         builder.setView(dialog_view)
         builder.setTitle(R.string.dialog_title)
         builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
-                var timesec = npMinutes.value  * 60
-                if (timesec.equals(0)) {
-                    timesec = 30
-                }
-                // TODO : support every 30 minutes time setting
-                //if (cb30sec.isChecked() && numPicker.getValue() < 10) {
-                //    timesec += 30;
-                //}
-                buttonTimeList[buttonIdx] = timesec
+            var timesec = npMinutes.value  * 60
+            if (timesec.equals(0)) {
+                timesec = 30
+            }
+            // TODO : support every 30 minutes time setting
+            //if (cb30sec.isChecked() && numPicker.getValue() < 10) {
+            //    timesec += 30;
+            //}
+            buttonTimeList[buttonIdx] = timesec
 
-                buttonList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec.toInt(), applicationContext)
+            buttonList[buttonIdx]!!.text = Converter.buttonTimeMin(timesec)
+            text30secList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec)
         })
         builder.setNegativeButton(R.string.dialog_cancel,{ dialog: DialogInterface, which: Int -> })
 
