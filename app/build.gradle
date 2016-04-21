@@ -1,10 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion 19
     buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "ypsilon.app.cdn"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 21
     }
     buildTypes {
@@ -15,7 +18,25 @@ android {
     }
     productFlavors {
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main.aidl.srcDirs += 'src/main/aidl'
+    }
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+buildscript {
+    ext.kotlin_version = '1.0.1'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
 }

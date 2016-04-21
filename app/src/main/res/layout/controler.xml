@@ -20,7 +20,7 @@
 		android:layout_marginBottom="20sp">
 
 		<TextView
-			android:id="@+id/TimeView"
+			android:id="@+id/tvTimeView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
@@ -34,7 +34,7 @@
 
 
 	<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/VF_switcher" android:layout_width="fill_parent"
+		android:id="@+id/vfSelector" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 
 		<!-- Start many button layout -->
@@ -45,7 +45,7 @@
 				android:orientation="vertical" android:id="@+id/LL_MainButton"
 				android:layout_width="fill_parent" android:layout_gravity="center_horizontal">
 
-				<Button android:id="@+id/Bt_Main" android:layout_height="wrap_content"
+				<Button android:id="@+id/btStartStop" android:layout_height="wrap_content"
 					android:layout_width="fill_parent" android:padding="7sp"
 					android:layout_margin="5sp" android:layout_gravity="center"
 					android:height="110sp" android:textOff="Wait.." android:textOn="00:00"
@@ -62,46 +62,135 @@
 
 				<TableRow android:id="@+id/TR_1" android:layout_height="wrap_content"
 					android:layout_width="fill_parent">
-
-					<Button android:id="@+id/Bt_00" android:text="@string/text_10min"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:textColor="#eee"
-						android:background="@drawable/plastic_button">
-					</Button>
-					<Button android:text="@string/text_5min" android:id="@+id/Bt_01"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:background="@drawable/plastic_button"
-						android:textColor="#eee">
-					</Button>
-					<Button android:text="@string/text_3min" android:id="@+id/Bt_02"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:background="@drawable/plastic_button"
-						android:textColor="#eee">
-					</Button>
+                    <RelativeLayout
+                        android:id="@+id/ll00"
+                        android:tag="ll00"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+                        <Button android:id="@+id/bt00"
+                            android:text="@string/text_10min"
+                            android:gravity="end|center"
+                            android:tag="bt00"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="5sp" android:height="60sp"
+                            android:textSize="24sp" android:textColor="#eee"
+                            android:background="@drawable/plastic_button">
+                        </Button>
+                        <TextView
+                            android:id="@+id/tv_btsec00" android:tag="tv_btsec00"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/bt00"
+                            android:textSize="18sp" android:textColor="#eee"
+                            android:text=":00"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll01"
+                        android:tag="ll01"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+                        <Button android:text="@string/text_5min" android:id="@+id/bt01"
+                            android:tag="bt01"
+                            android:gravity="end|center"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="5sp" android:height="60sp"
+                            android:textSize="24sp" android:background="@drawable/plastic_button"
+                            android:textColor="#eee">
+                        </Button>
+                        <TextView
+                            android:id="@+id/tv_btsec01" android:tag="tv_btsec01"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp" android:textColor="#eee"
+                            android:text=":00"
+                            android:layout_alignBaseline="@+id/bt01" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll02"
+                        android:tag="ll02"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+                        <Button android:text="@string/text_3min" android:id="@+id/bt02"
+                            android:tag="bt02"
+                            android:gravity="end|center"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="5sp" android:height="60sp"
+                            android:textSize="24sp" android:background="@drawable/plastic_button"
+                            android:textColor="#eee">
+                        </Button>
+                        <TextView
+                            android:id="@+id/tv_btsec02" android:tag="tv_btsec02"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/bt02"
+                            android:textSize="18sp" android:textColor="#eee"
+                            android:text=":00"
+                            />
+                    </RelativeLayout>
 				</TableRow>
 				<TableRow android:id="@+id/TR_2" android:layout_height="wrap_content"
 					android:layout_width="fill_parent">
-					<Button android:text="@string/text_2min" android:id="@+id/Bt_10"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:background="@drawable/plastic_button"
-						android:textColor="#eee">
-					</Button>
-					<Button android:text="@string/text_1min" android:id="@+id/Bt_11"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:background="@drawable/plastic_button"
-						android:textColor="#eee">
-					</Button>
-					<Button android:id="@+id/Bt_12" android:text="@string/text_30sec"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:layout_margin="5sp" android:height="60sp"
-						android:textSize="24sp" android:background="@drawable/plastic_button"
-						android:textColor="#eee">
-					</Button>
+                    <RelativeLayout
+                        android:id="@+id/ll10"
+                        android:tag="ll10"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+						<Button android:text="@string/text_2min" android:id="@+id/bt10"
+							android:tag="bt10"
+							android:gravity="end|center"
+							android:layout_width="match_parent" android:layout_height="wrap_content"
+							android:layout_margin="5sp" android:height="60sp"
+							android:textSize="24sp" android:background="@drawable/plastic_button"
+							android:textColor="#eee">
+						</Button>
+						<TextView
+                            android:id="@+id/tv_btsec10" android:tag="tv_btsec10"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/bt10"
+							android:textSize="18sp" android:textColor="#eee"
+							android:text=":00"
+							/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll11"
+                        android:tag="ll11"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+                        <Button android:text="@string/text_1min" android:id="@+id/bt11"
+                            android:tag="bt11"
+                            android:gravity="end|center"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="5sp" android:height="60sp"
+                            android:textSize="24sp" android:background="@drawable/plastic_button"
+                            android:textColor="#eee">
+                        </Button>
+                        <TextView
+                            android:id="@+id/tv_btsec11" android:tag="tv_btsec11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/bt11"
+                            android:textSize="18sp" android:textColor="#eee"
+                            android:text=":00"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/ll12"
+                        android:tag="ll12"
+                        android:layout_width="0dp" android:layout_height="wrap_content">
+                        <Button android:id="@+id/bt12" android:text="@string/text_30sec"
+                            android:tag="bt12"
+                            android:gravity="end|center"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_margin="5sp" android:height="60sp"
+                            android:textSize="24sp" android:background="@drawable/plastic_button"
+                            android:textColor="#eee">
+                        </Button>
+                        <TextView
+                            android:id="@+id/tv_btsec12" android:tag="tv_btsec12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/bt12"
+                            android:textSize="18sp" android:textColor="#eee"
+                            android:text=":00"
+                            />
+                    </RelativeLayout>
 				</TableRow>
 			</TableLayout>
 
@@ -110,13 +199,13 @@
 				android:layout_gravity="center_horizontal" android:paddingTop="10sp">
 
 				<ToggleButton android:text="@+id/ToggleButton01"
-					android:id="@+id/TG_immediate" android:layout_width="wrap_content"
+					android:id="@+id/tgbImmediate" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:layout_margin="5sp"
 					android:width="120sp" android:height="60sp" android:textOn="@string/tg_button_on"
 					android:textOff="@string/tg_button_on" android:background="@drawable/btn_toggle_bg"
 					android:textColor="#eee">
 				</ToggleButton>
-				<ToggleButton android:id="@+id/TG_countdown"
+				<ToggleButton android:id="@+id/tgbPrecall"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
 					android:layout_margin="5sp" android:width="120sp" android:height="60sp"
 					android:text="@string/tg_button_321" android:textOff="@string/tg_button_321"
@@ -134,7 +223,7 @@
 			android:layout_width="fill_parent" android:layout_marginBottom="30sp"
 			android:background="@drawable/bg">
 
-			<Button android:id="@+id/Bt_Sub_Main" android:layout_height="fill_parent"
+			<Button android:id="@+id/btStartStopBig" android:layout_height="fill_parent"
 				android:layout_width="fill_parent" android:padding="7sp"
 				android:layout_margin="5sp" android:text="@string/text_start" android:textSize="40sp"
 				android:background="@drawable/plastic_button" android:textColor="#eee">
