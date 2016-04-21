@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.NumberPicker
 import android.widget.TextView
 
@@ -493,6 +494,7 @@ class Control : Activity(), ServiceConnection {
         val npMinutes: NumberPicker = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
         npMinutes.setMaxValue(10)
         npMinutes.setMinValue(0)
+        val cb30sec: CheckBox = dialog_view.findViewById(R.id.cb30sec) as CheckBox
 
         val txButtonName: TextView = dialog_view.findViewById(R.id.txButtonName) as TextView
         txButtonName.text = getString(R.string.dialog_button_name, buttonIdx + 1)
@@ -502,13 +504,12 @@ class Control : Activity(), ServiceConnection {
         builder.setTitle(R.string.dialog_title)
         builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
             var timesec = npMinutes.value  * 60
-            if (timesec.equals(0)) {
-                timesec = 30
+            if (cb30sec.isChecked() && npMinutes.value != 10) {
+                    timesec += 30;
+            } else if (timesec.equals(0)) {
+                timesec = 30  // minimum value is 30 sec
             }
-            // TODO : support every 30 minutes time setting
-            //if (cb30sec.isChecked() && numPicker.getValue() < 10) {
-            //    timesec += 30;
-            //}
+
             buttonTimeList[buttonIdx] = timesec
 
             buttonList[buttonIdx]!!.text = Converter.buttonTimeMin(timesec)

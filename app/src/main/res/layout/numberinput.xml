@@ -33,16 +33,15 @@
             android:layout_height="match_parent"
             android:minWidth="30dp" />
 
-        <EditText
-            android:layout_width="136dp"
+        <CheckBox
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/instructionText"
-            android:lines="3"
             android:text="@string/dialog_instruction"
-            android:textColor="@android:color/white"
-            android:background="@android:color/transparent" />
+            android:id="@+id/cb30sec"
+            android:layout_gravity="center"
+            android:textSize="@dimen/time_button_text_size" />
 
     </LinearLayout>
+
 
 </LinearLayout>
