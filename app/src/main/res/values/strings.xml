@@ -27,4 +27,6 @@
     <string name="dialog_30sec">30sec</string>
     <dimen name="dialog_text_size">24sp</dimen>
     <string name="dialog_instruction">30 sec</string>
+    <dimen name="button_text_min">28sp</dimen>
+    <dimen name="button_text_sec">24sp</dimen>
 </resources>
