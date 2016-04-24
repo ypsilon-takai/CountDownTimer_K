@@ -25,6 +25,9 @@ class Caller(private val parentContext: Context) {
         createIdMap()
     }
 
+    private fun compse_num(number) {
+
+    }
 
     private fun createIdMap() {
 

@@ -397,7 +397,7 @@ class Control : Activity(), ServiceConnection {
                 tvTimeView!!.text = "ERROR!"
             }
 
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
     }
@@ -502,6 +502,13 @@ class Control : Activity(), ServiceConnection {
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
         builder.setView(dialog_view)
         builder.setTitle(R.string.dialog_title)
+
+        //初期値セット
+        npMinutes.value = (buttonTimeList[buttonIdx] / 60).toInt()
+        if ((buttonTimeList[buttonIdx] % 60) > 0) {
+            cb30sec.isChecked = true
+        }
+
         builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
             var timesec = npMinutes.value  * 60
             if (cb30sec.isChecked() && npMinutes.value != 10) {
