@@ -3,28 +3,37 @@ package ypsilon.app.cdn
 import java.util.HashMap
 
 import android.content.Context
+import android.media.AudioAttributes
+import android.media.AudioAttributes.*
 import android.media.AudioManager
 import android.media.SoundPool
+import android.os.Build
 
 class Caller(private val parentContext: Context) {
 
     private val spool: SoundPool
-    private val wordIdMap: HashMap<String, Int>
-    private val numIdMap: HashMap<Int, Int>
+    private val wordIdMap: HashMap<String, Int> = HashMap<String, Int>()
+    private val numIdMap: HashMap<Int, Int> = HashMap<Int, Int>()
 
-    private val conv: Converter
+    private val conv: Converter = Converter()
 
     init {
-        conv = Converter()
 
-        spool = SoundPool(10, AudioManager.STREAM_MUSIC, 100)
-
-        wordIdMap = HashMap<String, Int>()
-        numIdMap = HashMap<Int, Int>()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            spool = SoundPool(10, AudioManager.STREAM_MUSIC, 100)
+        } else {
+            val attr = AudioAttributes.Builder()
+                    .setUsage(USAGE_MEDIA)
+                    .setContentType(CONTENT_TYPE_MUSIC)
+                    .build()
+            spool = SoundPool.Builder()
+                    .setAudioAttributes(attr)
+                    .setMaxStreams(10)
+                    .build()
+        }
 
         createIdMap()
     }
-
 
     private fun createIdMap() {
 
