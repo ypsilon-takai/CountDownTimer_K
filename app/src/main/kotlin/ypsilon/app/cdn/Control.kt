@@ -299,13 +299,13 @@ class Control : Activity(), ServiceConnection {
 
     override fun onPause() {
         // save button values
-        var prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-        var editor = prefs.edit()
+        val prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        val editor = prefs.edit()
         for(idx in buttonList.indices) {
             editor.putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
         editor.apply()
-        editor.commit()
+        //editor.commit()
 
         super.onPause()
     }
@@ -484,7 +484,7 @@ class Control : Activity(), ServiceConnection {
         }
     }
 
-    protected fun showTimeInputDialog(buttonIdx: Int) {
+    private fun showTimeInputDialog(buttonIdx: Int) {
 
         val builder = AlertDialog.Builder(this)
 
