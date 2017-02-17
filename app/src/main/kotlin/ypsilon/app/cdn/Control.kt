@@ -285,22 +285,24 @@ class Control : Activity(), ServiceConnection {
 
     override fun onWindowFocusChanged(hasFocus : Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        for(idx in buttonList.indices) {
-            val bt = buttonList[idx] as Button
-            bt.setPadding(bt.paddingLeft, bt.paddingTop, (bt.width * 0.5).toInt(), bt.paddingBottom)
-            //Log.d("HLGT Debug", "Button pad ${bt.width}")
+        if (hasFocus) {
+            for (idx in buttonList.indices) {
+                val bt = buttonList[idx] as Button
+                bt.setPadding(bt.paddingLeft, bt.paddingTop, (bt.width * 0.5).toInt(), bt.paddingBottom)
+                //Log.d("HLGT Debug", "Button pad ${bt.width}")
 
-            val bt_second = text30secList[idx] as TextView
-            bt_second.setPadding((bt_second.width * 0.52).toInt(), bt_second.paddingTop,
-                    bt_second.paddingRight, bt_second.paddingBottom)
-            //Log.d("HLGT Debug", "Button sec pad ${bt.width}")
+                val bt_second = text30secList[idx] as TextView
+                bt_second.setPadding((bt_second.width * 0.52).toInt(), bt_second.paddingTop,
+                        bt_second.paddingRight, bt_second.paddingBottom)
+                //Log.d("HLGT Debug", "Button sec pad ${bt_second.width}")
+            }
         }
     }
 
     override fun onPause() {
         // save button values
-        var prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-        var editor = prefs.edit()
+        val prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        val editor = prefs.edit()
         for(idx in buttonList.indices) {
             editor.putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
@@ -505,8 +507,8 @@ class Control : Activity(), ServiceConnection {
         builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
             var timesec = npMinutes.value  * 60
             if (cb30sec.isChecked() && npMinutes.value != 10) {
-                    timesec += 30;
-            } else if (timesec.equals(0)) {
+                    timesec += 30
+            } else if (timesec == 0) {
                 timesec = 30  // minimum value is 30 sec
             }
 
