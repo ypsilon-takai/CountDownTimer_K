@@ -222,8 +222,8 @@ class Control : Activity(), ServiceConnection {
             val bt = buttonList[idx] as Button
             bt.text = Converter.buttonTimeMin(buttonTimeList[idx])
 
-            val sec_txt = text30secList[idx] as TextView
-            sec_txt.text = Converter.buttonTimeSec(buttonTimeList[idx])
+            val secondText = text30secList[idx] as TextView
+            secondText.text = Converter.buttonTimeSec(buttonTimeList[idx])
 
             bt.setOnClickListener {
                 if (!timerRunning) {
@@ -261,7 +261,7 @@ class Control : Activity(), ServiceConnection {
                         tvTimeView!!.setText(Converter.formatTimeMinSec(time))
 
                     } else {
-                        Log.d("HLGT Debug", "Control onReceive()" + csstate)
+                        Log.d("HLGT Debug", "Control onReceive() $csstate")
                         // countdown finished
                         timerRunning = false
                         resetDisp()
@@ -292,10 +292,10 @@ class Control : Activity(), ServiceConnection {
                 bt.setPadding(bt.paddingLeft, bt.paddingTop, (bt.width * 0.5).toInt(), bt.paddingBottom)
                 //Log.d("HLGT Debug", "Button pad ${bt.width}")
 
-                val bt_second = text30secList[idx] as TextView
-                bt_second.setPadding((bt_second.width * 0.52).toInt(), bt_second.paddingTop,
-                        bt_second.paddingRight, bt_second.paddingBottom)
-                //Log.d("HLGT Debug", "Button sec pad ${bt_second.width}")
+                val secondButtenText = text30secList[idx] as TextView
+                secondButtenText.setPadding((secondButtenText.width * 0.52).toInt(), secondButtenText.paddingTop,
+                        secondButtenText.paddingRight, secondButtenText.paddingBottom)
+                //Log.d("HLGT Debug", "Button sec pad ${secondButtenText.width}")
             }
         }
     }
@@ -513,7 +513,7 @@ class Control : Activity(), ServiceConnection {
             buttonList[buttonIdx]!!.text = Converter.buttonTimeMin(timesec)
             text30secList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec)
         })
-        builder.setNegativeButton(R.string.dialog_cancel,{ dialog: DialogInterface, which: Int -> })
+        builder.setNegativeButton(R.string.dialog_cancel,{ _: DialogInterface, _: Int -> })
 
         val myDialog = builder.create()
 

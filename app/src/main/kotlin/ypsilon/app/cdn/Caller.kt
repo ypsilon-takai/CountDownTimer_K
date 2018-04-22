@@ -49,9 +49,9 @@ class Caller(private val parentContext: Context) {
     }
 
     fun say(num: Int) {
-        val number_int = Integer.valueOf(num)
-        if (numIdMap.containsKey(number_int)) {
-            spool.play(numIdMap[number_int] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
+        val numberInt = Integer.valueOf(num)
+        if (numIdMap.containsKey(numberInt)) {
+            spool.play(numIdMap[numberInt] as Int, 1.0f, 1.0f, 1, 0, 1.0f)
         }
     }
 
