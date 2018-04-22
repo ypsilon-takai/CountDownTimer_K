@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ypsilon.app.cdn"
-      android:versionName="3.0_alfa1" android:versionCode="3">
-    <uses-sdk android:minSdkVersion="6" />  
+      android:versionName="3.0_alfa2" android:versionCode="4">
     <application
     	android:icon="@drawable/ic_rc_timer"
     	android:label="@string/app_name"
