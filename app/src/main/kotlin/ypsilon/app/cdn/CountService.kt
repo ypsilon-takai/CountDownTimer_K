@@ -113,6 +113,8 @@ class CountService : Service() {
         Log.d("HLGT CS", "CountService start()")
         this.setTime(time, pretime)
         counting = true
+        caller!!.say("bless")
+        Thread.sleep(150)
         ticktick!!.start()
     }
 
