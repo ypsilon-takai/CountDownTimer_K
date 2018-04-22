@@ -16,7 +16,7 @@ open class TickTick {
 
     fun start() {
         timer = Timer(true)
-        timer!!.schedule(object : TimerTask() {
+        timer?.schedule(object : TimerTask() {
             override fun run() {
                 handler.post {
                         onTick()
@@ -26,7 +26,7 @@ open class TickTick {
     }
 
     fun cancel() {
-        timer!!.cancel()
+        timer?.cancel()
     }
 
 }

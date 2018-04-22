@@ -62,7 +62,7 @@ class CountService : Service() {
     }
 
 
-    var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
+    private var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
 
         override fun setTime(time: Int, pretime: Int): Boolean {
             return this@CountService.setTime(time, pretime)
@@ -98,13 +98,13 @@ class CountService : Service() {
     private fun setTime(time: Int, pretime: Int): Boolean {
         Log.d("HLGT CS", "CountService setTime()")
 
-        if (!counting) {
+        return if (!counting) {
             remainTime = time
             initialTime = time
             remainPreTime = pretime
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 

@@ -12,8 +12,8 @@ import android.os.Build
 class Caller(private val parentContext: Context) {
 
     private val spool: SoundPool
-    private val wordIdMap: HashMap<String, Int> = HashMap<String, Int>()
-    private val numIdMap: HashMap<Int, Int> = HashMap<Int, Int>()
+    private val wordIdMap: HashMap<String, Int> = HashMap()
+    private val numIdMap: HashMap<Int, Int> = HashMap()
 
     private val conv: Converter = Converter()
 
@@ -38,11 +38,13 @@ class Caller(private val parentContext: Context) {
     private fun createIdMap() {
 
         for (entry in conv.numToResid.entries) {
-            numIdMap.put(entry.key, spool.load(parentContext, entry.value.toInt(), 1).toInt())
+            //numIdMap.put(entry.key, spool.load(parentContext, entry.value, 1))
+            numIdMap[entry.key] = spool.load(parentContext, entry.value, 1)
         }
 
         for (entry in conv.wordToResid.entries) {
-            wordIdMap.put(entry.key, spool.load(parentContext, entry.value.toInt(), 1).toInt())
+            wordIdMap[entry.key] = spool.load(parentContext, entry.value, 1)
+            //wordIdMap.put(entry.key, spool.load(parentContext, entry.value, 1))
         }
     }
 

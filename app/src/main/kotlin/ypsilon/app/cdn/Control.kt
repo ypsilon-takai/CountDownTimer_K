@@ -111,8 +111,8 @@ class Control : Activity(), ServiceConnection {
 
         // font
         val displayFont: Typeface? = Typeface.createFromAsset(getAssets(), "fonts/Seg12Modern.ttf")
-        tvTimeView!!.setTypeface(displayFont)
-        tvTimeView!!.setText(Converter.formatTimeMinSec(setTimeVal))
+        tvTimeView?.setTypeface(displayFont)
+        tvTimeView?.setText(Converter.formatTimeMinSec(setTimeVal))
 
         // button list
         buttonList = arrayOf(bt00, bt01, bt02, bt10, bt11, bt12)
@@ -120,19 +120,19 @@ class Control : Activity(), ServiceConnection {
                 tv_btsec10, tv_btsec11, tv_btsec12)
 
 
-        btStartStop!!.setText(getResources().getString(R.string.text_init))
-        btStartStopBig!!.setText(getResources().getString(R.string.text_init))
+        btStartStop?.setText(getResources().getString(R.string.text_init))
+        btStartStopBig?.setText(getResources().getString(R.string.text_init))
 
         // ********
         // * Small start button
 
         // Start or stop countdown.
-        btStartStop!!.setOnClickListener {
+        btStartStop?.setOnClickListener {
             if (!flicked) startOrStop()
         }
 
         // flick function
-        btStartStop!!.setOnTouchListener { view, motionEvent ->
+        btStartStop?.setOnTouchListener { _, motionEvent ->
             flipTemplate(motionEvent)
             false
         }
@@ -143,7 +143,7 @@ class Control : Activity(), ServiceConnection {
         // * Flip
         //
         // Flip button window.
-        vfSelector!!.setOnTouchListener { view, motionEvent ->
+        vfSelector?.setOnTouchListener { _, motionEvent ->
             flipTemplate(motionEvent)
             true
         }
@@ -152,23 +152,23 @@ class Control : Activity(), ServiceConnection {
         // * Big start button
         //
         // Big button NOT act with short click.
-        btStartStopBig!!.setOnClickListener {
+        btStartStopBig?.setOnClickListener {
             // Do nothing
         }
 
         // Big button act with long click.
-        btStartStopBig!!.setOnLongClickListener {
+        btStartStopBig?.setOnLongClickListener {
             startOrStop()
             true
         }
 
         // Flip button window when user wipe on big button.
-        btStartStopBig!!.setOnTouchListener { view, motionEvent ->
+        btStartStopBig?.setOnTouchListener { _, motionEvent ->
             flipTemplate(motionEvent)
             false
         }
 
-        btStartStopBig!!.setEnabled(false)
+        btStartStopBig?.setEnabled(false)
 
         /**
          * Restore app state
@@ -180,17 +180,17 @@ class Control : Activity(), ServiceConnection {
 
     private fun setStartButtonsColor(running: Boolean) {
         if (running) {
-            btStartStop!!.setBackgroundResource(R.drawable.plastic_red_button)
-            btStartStopBig!!.setBackgroundResource(R.drawable.plastic_red_button)
+            btStartStop?.setBackgroundResource(R.drawable.plastic_red_button)
+            btStartStopBig?.setBackgroundResource(R.drawable.plastic_red_button)
         } else {
-            btStartStop!!.setBackgroundResource(R.drawable.plastic_button)
-            btStartStopBig!!.setBackgroundResource(R.drawable.plastic_button)
+            btStartStop?.setBackgroundResource(R.drawable.plastic_button)
+            btStartStopBig?.setBackgroundResource(R.drawable.plastic_button)
         }
     }
 
     private fun setStartButtonsText(s: String) {
-        btStartStop!!.setText(s)
-        btStartStopBig!!.setText(s)
+        btStartStop?.setText(s)
+        btStartStopBig?.setText(s)
     }
 
     /*
@@ -212,8 +212,9 @@ class Control : Activity(), ServiceConnection {
         // restore saved value
         val prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
         for(idx in buttonList.indices) {
-            buttonTimeList[idx] = prefs.getInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
+            buttonTimeList[idx] = prefs.getInt(buttonList[idx]?.getTag().toString(), buttonTimeList[idx])
         }
+
         // Change button property
         // -Button text margin to 100
         // -Functions for number button clicked.
@@ -474,37 +475,32 @@ class Control : Activity(), ServiceConnection {
     }
 
     private fun getCounterServiceState(): Bundle? {
-        if (counterService != null) {
-            try {
-                return counterService!!.getState()
-            } catch (e: RemoteException) {
-                return null
-            }
-
-        } else {
-            return null
+        return try {
+            counterService?.state
+        } catch (e: RemoteException) {
+            null
         }
     }
 
-    protected fun showTimeInputDialog(buttonIdx: Int) {
+    private fun showTimeInputDialog(buttonIdx: Int) {
 
         val builder = AlertDialog.Builder(this)
 
         val inflater = LayoutInflater.from(this)
         //レイアウトファイルからビューを取得
-        val dialog_view = inflater.inflate(R.layout.numberinput, null)
-        val npMinutes: NumberPicker = dialog_view.findViewById(R.id.npMinutes) as NumberPicker
+        val dialogView = inflater.inflate(R.layout.numberinput, null)
+        val npMinutes: NumberPicker = dialogView.findViewById(R.id.npMinutes) as NumberPicker
         npMinutes.setMaxValue(10)
         npMinutes.setMinValue(0)
-        val cb30sec: CheckBox = dialog_view.findViewById(R.id.cb30sec) as CheckBox
+        val cb30sec: CheckBox = dialogView.findViewById(R.id.cb30sec) as CheckBox
 
-        val txButtonName: TextView = dialog_view.findViewById(R.id.txButtonName) as TextView
+        val txButtonName: TextView = dialogView.findViewById(R.id.txButtonName) as TextView
         txButtonName.text = getString(R.string.dialog_button_name, buttonIdx + 1)
 
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
-        builder.setView(dialog_view)
+        builder.setView(dialogView)
         builder.setTitle(R.string.dialog_title)
-        builder.setPositiveButton(R.string.dialog_set, { dialog: DialogInterface?, which: Int ->
+        builder.setPositiveButton(R.string.dialog_set, { _: DialogInterface?, _: Int ->
             var timesec = npMinutes.value  * 60
             if (cb30sec.isChecked() && npMinutes.value != 10) {
                     timesec += 30
