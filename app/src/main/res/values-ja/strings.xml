@@ -26,4 +26,5 @@
     <string name="dialog_button_name">ボタン %1$d</string>
     <string name="dialog_30sec">30秒</string>
     <string name="dialog_instruction">30秒</string>
+    <string name="error_str">エラー!</string>
 </resources>

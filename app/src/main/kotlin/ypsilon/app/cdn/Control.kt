@@ -396,7 +396,7 @@ class Control : Activity(), ServiceConnection {
                 setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
 
             } catch (e: Exception) {
-                tvTimeView!!.text = "ERROR!"
+                tvTimeView!!.text = getString(R.string.error_str)
             }
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
