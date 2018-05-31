@@ -120,31 +120,31 @@ class Converter {
             val min: Int = seconds / 60
             val sec: Int = seconds % 60
 
-            return "${min.format(2)}:${sec.format(2)}"
+            return "$min.format(2):$sec.format(2)"
         }
 
         fun formatTimeMin(seconds: Int): kotlin.String {
             val sec = seconds / 60
 
-            return "${sec.format(2)}"
+            return "$sec.format(2)"
         }
 
         fun formatTimeSec(seconds: Int): kotlin.String {
             val min = seconds % 60
 
-            return "${min.format(2)}"
+            return "$min.format(2)"
         }
 
 
         fun buttonTimeMin(seconds: Int): kotlin.String {
             val min = seconds / 60
 
-            return "${min}"
+            return "$min"
         }
         fun buttonTimeSec(seconds: Int): kotlin.String {
             val sec = seconds % 60
 
-            return ":${sec.format(2)}"
+            return ":$sec.format(2)"
         }
 
         /*
