@@ -484,6 +484,8 @@ class Control : Activity(), ServiceConnection {
 
     private fun showTimeInputDialog(buttonIdx: Int) {
 
+        val orgButtonTime = buttonTimeList[buttonIdx]
+
         val builder = AlertDialog.Builder(this)
 
         val inflater = LayoutInflater.from(this)
@@ -492,7 +494,10 @@ class Control : Activity(), ServiceConnection {
         val npMinutes: NumberPicker = dialogView.findViewById(R.id.npMinutes) as NumberPicker
         npMinutes.setMaxValue(10)
         npMinutes.setMinValue(0)
+        npMinutes.value = orgButtonTime / 60
+
         val cb30sec: CheckBox = dialogView.findViewById(R.id.cb30sec) as CheckBox
+        cb30sec.isChecked = orgButtonTime % 60 > 0
 
         val txButtonName: TextView = dialogView.findViewById(R.id.txButtonName) as TextView
         txButtonName.text = getString(R.string.dialog_button_name, buttonIdx + 1)
