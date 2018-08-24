@@ -214,6 +214,8 @@ class Control : Activity(), ServiceConnection {
         for(idx in buttonList.indices) {
             buttonTimeList[idx] = prefs.getInt(buttonList[idx]?.getTag().toString(), buttonTimeList[idx])
         }
+        tgbPrecall.isChecked = prefs.getBoolean("precall", false)
+        tgbImmediate.isChecked = prefs.getBoolean("immediate", false)
 
         // Change button property
         // -Button text margin to 100
@@ -307,6 +309,9 @@ class Control : Activity(), ServiceConnection {
         for(idx in buttonList.indices) {
             editor.putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
         }
+        editor.putBoolean("precall", tgbPrecall.isChecked)
+        editor.putBoolean("immediate", tgbImmediate.isChecked)
+
         editor.apply()
         editor.commit()
 
