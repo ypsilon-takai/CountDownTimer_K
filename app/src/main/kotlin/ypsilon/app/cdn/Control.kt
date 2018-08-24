@@ -510,10 +510,10 @@ class Control : Activity(), ServiceConnection {
         //レイアウト、題名、OKボタンとキャンセルボタンをつけてダイアログ作成
         builder.setView(dialogView)
         builder.setTitle(R.string.dialog_title)
-        builder.setPositiveButton(R.string.dialog_set, { _: DialogInterface?, _: Int ->
+        builder.setPositiveButton(R.string.dialog_set) { _: DialogInterface?, _: Int ->
             var timesec = npMinutes.value  * 60
             if (cb30sec.isChecked() && npMinutes.value != 10) {
-                    timesec += 30
+                timesec += 30
             } else if (timesec == 0) {
                 timesec = 30  // minimum value is 30 sec
             }
@@ -522,8 +522,8 @@ class Control : Activity(), ServiceConnection {
 
             buttonList[buttonIdx]!!.text = Converter.buttonTimeMin(timesec)
             text30secList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec)
-        })
-        builder.setNegativeButton(R.string.dialog_cancel,{ _: DialogInterface, _: Int -> })
+        }
+        builder.setNegativeButton(R.string.dialog_cancel) { _: DialogInterface, _: Int -> }
 
         val myDialog = builder.create()
 
