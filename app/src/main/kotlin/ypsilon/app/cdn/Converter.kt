@@ -23,6 +23,8 @@ class Converter {
         wordToResid.put("start", R.raw.voice_start)
         wordToResid.put("finished", R.raw.horn)
         wordToResid.put("bless", R.raw.voice_silent_05)
+        wordToResid.put("chime", R.raw.short_ring_org)
+        wordToResid.put("ping", R.raw.short_ring_low)
         //wordToResid.put("bless", R.raw.voice_minute)
 
         numToResid.put(0, R.raw.voice_000)

@@ -1,8 +1,8 @@
 package ypsilon.app.cdn;
 
 interface CounterSvcIF {
-	boolean setTime (int time, int pretime);
-	void start (int time, int pretime);
+	boolean setTime (int time, int pretime, boolean is_loop);
+	void start (int time, int pretime, boolean is_loop);
 	void pause ();
 	void restart ();
 	void stop ();

@@ -216,6 +216,7 @@ class Control : Activity(), ServiceConnection {
         }
         tgbPrecall.isChecked = prefs.getBoolean("precall", false)
         tgbImmediate.isChecked = prefs.getBoolean("immediate", false)
+        tgbLoop.isChecked = prefs.getBoolean("loop", false)
 
         // Change button property
         // -Button text margin to 100
@@ -311,6 +312,7 @@ class Control : Activity(), ServiceConnection {
         }
         editor.putBoolean("precall", tgbPrecall.isChecked)
         editor.putBoolean("immediate", tgbImmediate.isChecked)
+        editor.putBoolean("loop", tgbLoop.isChecked)
 
         editor.apply()
         editor.commit()
@@ -392,9 +394,9 @@ class Control : Activity(), ServiceConnection {
             // START
             try {
                 if (tgbPrecall?.isChecked() == true) {
-                    counterService?.start(setTimeVal, preTimeVal)
+                    counterService?.start(setTimeVal, preTimeVal, tgbLoop?.isChecked ?: false)
                 } else {
-                    counterService?.start(setTimeVal, 0)
+                    counterService?.start(setTimeVal, 0, tgbLoop?.isChecked ?: false)
                 }
 
                 timerRunning = true
