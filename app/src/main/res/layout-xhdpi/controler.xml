@@ -237,7 +237,7 @@
 					android:textColor="#eee">
 				</ToggleButton>
                 <ToggleButton
-                    android:id="@+id/tgbRepeat"
+                    android:id="@+id/tgbLoop"
 					android:layout_width="0dp"
 					android:layout_weight="1"
                     android:layout_height="wrap_content" android:layout_margin="5dp"
