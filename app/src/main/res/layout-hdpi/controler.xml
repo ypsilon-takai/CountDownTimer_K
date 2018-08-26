@@ -203,20 +203,34 @@
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_gravity="center_horizontal" android:paddingTop="10dp">
 
-				<ToggleButton android:text="@+id/ToggleButton01"
-					android:id="@+id/tgbImmediate" android:layout_width="wrap_content"
+				<ToggleButton
+					android:id="@+id/tgbImmediate"
+					android:layout_width="0dp"
+					android:layout_weight="1"
 					android:layout_height="wrap_content" android:layout_margin="5dp"
-					android:width="120dp" android:height="60dp" android:textOn="@string/tg_button_on"
-					android:textOff="@string/tg_button_on" android:background="@drawable/btn_toggle_bg"
+					android:width="120dp" android:height="60dp" android:textOn="@string/tg_button_quick"
+					android:textOff="@string/tg_button_quick" android:background="@drawable/btn_toggle_bg"
 					android:textColor="#eee">
 				</ToggleButton>
 				<ToggleButton android:id="@+id/tgbPrecall"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_width="0dp"
+					android:layout_weight="1"
+					android:layout_height="wrap_content"
 					android:layout_margin="5dp" android:width="120dp" android:height="60dp"
 					android:text="@string/tg_button_321" android:textOff="@string/tg_button_321"
 					android:textOn="@string/tg_button_321" android:background="@drawable/btn_toggle_bg"
 					android:textColor="#eee">
 				</ToggleButton>
+				<ToggleButton
+					android:id="@+id/tgbLoop"
+					android:layout_width="0dp"
+					android:layout_weight="1"
+					android:layout_height="wrap_content" android:layout_margin="5dp"
+					android:width="120dp" android:height="60dp" android:textOn="@string/tg_button_loop"
+					android:textOff="@string/tg_button_loop" android:background="@drawable/btn_toggle_bg"
+					android:textColor="#eee">
+				</ToggleButton>
+
 			</LinearLayout>
 
 		</LinearLayout>

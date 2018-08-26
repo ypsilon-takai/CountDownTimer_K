@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Countdown Timer L</string>
-    <string name="tg_button_on">Quick</string>
-    <string name="tg_button_off">With Start</string>
+    <string name="tg_button_quick">Quick</string>
     <string name="tg_button_321">5,4...</string>
+    <string name="tg_button_loop">Loop</string>
     <string name="tg_button_none">No</string>
     <dimen name="time_button_height">60dp</dimen>
     <dimen name="time_button_width">60dp</dimen>
