@@ -70,6 +70,10 @@ class CountService : Service() {
             return this@CountService.setTime(time, pretime, is_loop)
         }
 
+        override fun setloop(is_loop: Boolean) {
+            this@CountService.setLoop(is_loop)
+        }
+
         override fun start(time: Int, pretime: Int, is_loop: Boolean) {
             this@CountService.start(time, pretime, is_loop)
         }
@@ -111,6 +115,9 @@ class CountService : Service() {
         }
     }
 
+    private fun setLoop(is_loop: Boolean) {
+        this.isLoop = is_loop
+    }
 
     private fun start(time: Int, pretime: Int, is_loop: Boolean) {
         Log.d("HLGT CS", "CountService start()")

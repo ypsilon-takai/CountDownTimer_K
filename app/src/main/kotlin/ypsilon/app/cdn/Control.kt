@@ -240,6 +240,11 @@ class Control : Activity(), ServiceConnection {
         }
 
         // **************
+        tgbLoop.setOnClickListener {
+            counterService!!.setloop(tgbLoop.isChecked)
+        }
+
+        // **************
         //  Broadcast receiver
         if (bcReceiver == null) {
             bcReceiver = object : BroadcastReceiver() {
