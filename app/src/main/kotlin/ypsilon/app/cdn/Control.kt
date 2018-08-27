@@ -137,7 +137,7 @@ class Control : Activity(), ServiceConnection {
             false
         }
 
-        btStartStop!!.setEnabled(false)
+        btStartStop?.setEnabled(false)
 
         // ********
         // * Flip
@@ -260,7 +260,7 @@ class Control : Activity(), ServiceConnection {
                         setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
 
                         val time = message.getExtras().getInt("TIME", 0)
-                        tvTimeView!!.setText(Converter.formatTimeMinSec(time))
+                        tvTimeView?.setText(Converter.formatTimeMinSec(time))
 
                     } else {
                         Log.d("HLGT Debug", "Control onReceive() $csstate")
@@ -307,7 +307,7 @@ class Control : Activity(), ServiceConnection {
         val prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
         val editor = prefs.edit()
         for(idx in buttonList.indices) {
-            editor.putInt(buttonList[idx]!!.getTag().toString(), buttonTimeList[idx])
+            editor.putInt(buttonList[idx]?.getTag().toString(), buttonTimeList[idx])
         }
         editor.putBoolean("precall", tgbPrecall.isChecked)
         editor.putBoolean("immediate", tgbImmediate.isChecked)
@@ -347,7 +347,7 @@ class Control : Activity(), ServiceConnection {
 
                     Log.d("HLGT Debug", "CountService Calling stopService()")
 
-                    counterService!!.end()
+                    counterService?.end()
                     val intent = Intent(applicationContext, CountService::class.java)
                     stopService(intent)
                 } catch (e: Exception) {
@@ -367,7 +367,7 @@ class Control : Activity(), ServiceConnection {
     private fun setTimeOnButtonPush(time_second: Int) {
         setTimeVal = time_second
         setTimeDisp(setTimeVal)
-        if (tgbImmediate!!.isChecked()) {
+        if (tgbImmediate?.isChecked() == true) {
             startOrStop()
         }
 
@@ -383,7 +383,7 @@ class Control : Activity(), ServiceConnection {
             resetDisp()
 
             try {
-                counterService!!.stop()
+                counterService?.stop()
             } catch (e: Exception) {
                 Log.d("HLGT Debug", e.toString())
             }
@@ -391,10 +391,10 @@ class Control : Activity(), ServiceConnection {
         } else {
             // START
             try {
-                if (tgbPrecall!!.isChecked()) {
-                    counterService!!.start(setTimeVal, preTimeVal)
+                if (tgbPrecall?.isChecked() == true) {
+                    counterService?.start(setTimeVal, preTimeVal)
                 } else {
-                    counterService!!.start(setTimeVal, 0)
+                    counterService?.start(setTimeVal, 0)
                 }
 
                 timerRunning = true
@@ -402,7 +402,7 @@ class Control : Activity(), ServiceConnection {
                 setStartButtonsText(Converter.formatTimeMinSec(setTimeVal))
 
             } catch (e: Exception) {
-                tvTimeView!!.text = getString(R.string.error_str)
+                tvTimeView?.text = getString(R.string.error_str)
             }
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -415,14 +415,14 @@ class Control : Activity(), ServiceConnection {
      * @param time : time as seconds.
      */
     private fun setTimeDisp(time: Int) {
-        tvTimeView!!.text = Converter.formatTimeMinSec(time)
+        tvTimeView?.text = Converter.formatTimeMinSec(time)
     }
 
     /**
      * Reset display and button text.
      */
     private fun resetDisp() {
-        tvTimeView!!.text = Converter.formatTimeMinSec(setTimeVal)
+        tvTimeView?.text = Converter.formatTimeMinSec(setTimeVal)
         setStartButtonsColor(false)
         setStartButtonsText(getResources().getString(R.string.text_start))
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -444,10 +444,10 @@ class Control : Activity(), ServiceConnection {
                 endXPos = event.getX()
                 if (startXPos - endXPos > 30) {
                     flicked = true
-                    vfSelector!!.showNext()
+                    vfSelector?.showNext()
                 } else if (startXPos - endXPos < -30) {
                     flicked = true
-                    vfSelector!!.showPrevious()
+                    vfSelector?.showPrevious()
                 }
             }
         }
@@ -463,8 +463,8 @@ class Control : Activity(), ServiceConnection {
         counterService = CounterSvcIF.Stub.asInterface(service)
         bindToService = true
 
-        btStartStop!!.setEnabled(true)
-        btStartStopBig!!.setEnabled(true)
+        btStartStop?.setEnabled(true)
+        btStartStopBig?.setEnabled(true)
 
         setStartButtonsText(getResources().getString(R.string.text_start))
         setStartButtonsColor(false)
@@ -520,8 +520,8 @@ class Control : Activity(), ServiceConnection {
 
             buttonTimeList[buttonIdx] = timesec
 
-            buttonList[buttonIdx]!!.text = Converter.buttonTimeMin(timesec)
-            text30secList[buttonIdx]!!.text = Converter.buttonTimeSec(timesec)
+            buttonList[buttonIdx]?.text = Converter.buttonTimeMin(timesec)
+            text30secList[buttonIdx]?.text = Converter.buttonTimeSec(timesec)
         }
         builder.setNegativeButton(R.string.dialog_cancel) { _: DialogInterface, _: Int -> }
 

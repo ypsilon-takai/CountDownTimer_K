@@ -113,9 +113,9 @@ class CountService : Service() {
         Log.d("HLGT CS", "CountService start()")
         this.setTime(time, pretime)
         counting = true
-        caller!!.say("bless")
+        caller?.say("bless")
         Thread.sleep(150)
-        ticktick!!.start()
+        ticktick?.start()
     }
 
 
@@ -123,7 +123,7 @@ class CountService : Service() {
 
         Log.d("HLGT CS", "CountService stop()")
 
-        ticktick!!.cancel()
+        ticktick?.cancel()
 
         remainPreTime = -1
         remainTime = -1
@@ -148,9 +148,7 @@ class CountService : Service() {
     private fun end() {
         Log.d("HLGT CS", "CountService end()")
 
-        if (ticktick != null) {
-            ticktick!!.cancel()
-        }
+        ticktick?.cancel()
 
         this.stopSelf()
     }
@@ -178,7 +176,7 @@ class CountService : Service() {
 
         if (remainPreTime > 0) {
             //Log.d("CountService", "cd 01");
-            caller!!.say(remainPreTime)
+            caller?.say(remainPreTime)
             // *** call controler
             message.putExtra("STATE", counting)
             message.putExtra("TIME", remainPreTime)
@@ -186,7 +184,7 @@ class CountService : Service() {
             remainPreTime--
         } else if (remainTime > 0) {
             //Log.d("CountService", "cd 02");
-            caller!!.say(remainTime)
+            caller?.say(remainTime)
             // *** call controler
             message.putExtra("STATE", counting)
             message.putExtra("TIME", remainTime)
@@ -194,8 +192,8 @@ class CountService : Service() {
             remainTime--
         } else if (remainTime <= 0) {
             Log.d("CountService", "cd finish")
-            caller!!.say("finished")
-            ticktick!!.cancel()
+            caller?.say("finished")
+            ticktick?.cancel()
             counting = false
             // *** call controler
             message.putExtra("STATE", counting)
@@ -206,7 +204,7 @@ class CountService : Service() {
             }
         } else {
             //Log.d("CountService", "cd error");
-            caller!!.say(remainTime)
+            caller?.say(remainTime)
             // *** call controler
             message.putExtra("STATE", counting)
             message.putExtra("TIME", remainTime)
