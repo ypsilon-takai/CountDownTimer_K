@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">カウントダウンタイマー L</string>
-    <string name="tg_button_on">スナップ</string>
-    <string name="tg_button_off">スタート</string>
     <string name="tg_button_321">5,4...</string>
     <string name="tg_button_none">なし</string>
     <dimen name="time_button_height">60dp</dimen>
@@ -27,4 +25,6 @@
     <string name="dialog_30sec">30秒</string>
     <string name="dialog_instruction">30秒</string>
     <string name="error_str">エラー!</string>
+    <string name="tg_button_quick">スナップ</string>
+    <string name="tg_button_loop">ループ</string>
 </resources>

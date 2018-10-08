@@ -12,6 +12,8 @@ class CountService : Service() {
     private var remainPreTime: Int = 0
     private var initialTime: Int = 0
 
+    private var isLoop: Boolean = false
+
     private var counting: Boolean = false
 
     private var caller: Caller? = null
@@ -64,12 +66,16 @@ class CountService : Service() {
 
     private var csifImplement: CounterSvcIF.Stub = object : CounterSvcIF.Stub() {
 
-        override fun setTime(time: Int, pretime: Int): Boolean {
-            return this@CountService.setTime(time, pretime)
+        override fun setTime(time: Int, pretime: Int, is_loop: Boolean): Boolean {
+            return this@CountService.setTime(time, pretime, is_loop)
         }
 
-        override fun start(time: Int, pretime: Int) {
-            this@CountService.start(time, pretime)
+        override fun setloop(is_loop: Boolean) {
+            this@CountService.setLoop(is_loop)
+        }
+
+        override fun start(time: Int, pretime: Int, is_loop: Boolean) {
+            this@CountService.start(time, pretime, is_loop)
         }
 
         override fun stop() {
@@ -95,23 +101,27 @@ class CountService : Service() {
 
 
     // Control functions
-    private fun setTime(time: Int, pretime: Int): Boolean {
+    private fun setTime(time: Int, pretime: Int, is_loop: Boolean): Boolean {
         Log.d("HLGT CS", "CountService setTime()")
 
         return if (!counting) {
             remainTime = time
             initialTime = time
             remainPreTime = pretime
+            isLoop = is_loop
             true
         } else {
             false
         }
     }
 
+    private fun setLoop(is_loop: Boolean) {
+        this.isLoop = is_loop
+    }
 
-    private fun start(time: Int, pretime: Int) {
+    private fun start(time: Int, pretime: Int, is_loop: Boolean) {
         Log.d("HLGT CS", "CountService start()")
-        this.setTime(time, pretime)
+        this.setTime(time, pretime, is_loop)
         counting = true
         caller?.say("bless")
         Thread.sleep(150)
@@ -127,6 +137,8 @@ class CountService : Service() {
 
         remainPreTime = -1
         remainTime = -1
+
+        isLoop = false
 
         counting = false
     }
@@ -192,15 +204,25 @@ class CountService : Service() {
             remainTime--
         } else if (remainTime <= 0) {
             Log.d("CountService", "cd finish")
-            caller?.say("finished")
-            ticktick?.cancel()
-            counting = false
-            // *** call controler
-            message.putExtra("STATE", counting)
 
-            if (refCount <= 0) {
-                Log.d("HLGT CS", "CountService Calling stopSelf()")
-                this.stopSelf()
+            if (isLoop) {
+                // looping
+                caller!!.say("chime")
+                remainTime = initialTime - 1
+                message.putExtra("STATE", counting)
+                message.putExtra("TIME", initialTime)
+                message.putExtra("INIT", initialTime)
+            } else {
+                // finish
+                caller!!.say("finished")
+                ticktick!!.cancel()
+                counting = false
+                // *** call controler
+                message.putExtra("STATE", counting)
+                if (refCount <= 0) {
+                    Log.d("HLGT CS", "CountService Calling stopSelf()")
+                    this.stopSelf()
+                }
             }
         } else {
             //Log.d("CountService", "cd error");
