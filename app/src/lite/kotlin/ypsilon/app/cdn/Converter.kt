@@ -18,6 +18,10 @@ class Converter {
 
     }
 
+    private fun syncesize_sounds() {
+
+    }
+
     private fun initSoundData() {
 
         wordToResid.put("start", R.raw.voice_start)
